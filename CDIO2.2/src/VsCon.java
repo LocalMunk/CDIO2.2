@@ -19,7 +19,7 @@ public class VsCon {
     
     public static void main(String[] args) throws IOException{
         listener = new ServerSocket(portdst);
-            System.out.println("Venter paa connection på port " + portdst );
+            System.out.println("Venter paa connection pÃ¥ port " + portdst );
             System.out.println("Indtast eventuel portnummer som 1. argument");
             System.out.println("paa kommando linien for andet portnr");
         sock = listener.accept();
@@ -27,7 +27,7 @@ public class VsCon {
         outstream = new DataOutputStream(sock.getOutputStream());
         printmenu();
         try{
-            while (!(inline = instream.readLine().toUpperCase()).isEmpty()){ //her ventes på input
+            while (!(inline = instream.readLine().toUpperCase()).isEmpty()){ //her ventes pï¿½ input
             	if (inline.startsWith("RM")){						
                 	// ikke implimenteret
 
@@ -36,7 +36,7 @@ public class VsCon {
                     if (inline.equals("DW"))
                         indtDisp="";
                     else
-                        indtDisp=(inline.substring(2, inline.length()));//her skal anførselstegn udm.
+                        indtDisp=(inline.substring(2, inline.length()));//her skal anfï¿½rselstegn udm.
                         printmenu();
                         outstream.writeBytes("DB"+"\r\n");
                 }
@@ -49,7 +49,7 @@ public class VsCon {
                     printmenu();
                     outstream.writeBytes("S S " + (brutto-tara)+ " kg "  +"\r\n");//HVOR MANGE SPACE?
                 }
-                else if (inline.startsWith("B")){ //denne ordre findes ikke på en fysisk vægt
+                else if (inline.startsWith("B")){ //denne ordre findes ikke pï¿½ en fysisk vï¿½gt
                     String temp= inline.substring(2,inline.length());
                     brutto = Double.parseDouble(temp);
                     printmenu();
@@ -90,14 +90,14 @@ else {
         System.out.println("Brutto: " + (brutto)+ " kg"                       );
         System.out.println("Streng modtaget: "+inline)                         ;
         System.out.println("                                                 ");
-        System.out.println("Denne vægt simulator lytter på ordrene           ");
+        System.out.println("Denne vï¿½gt simulator lytter pï¿½ ordrene           ");
         System.out.println("S, T, D 'TEST', DW, RM20 8 .... , B og Q         ");
-        System.out.println("på kommunikationsporten.                         ");
+        System.out.println("pï¿½ kommunikationsporten.                         ");
         System.out.println("******")						     ;
         System.out.println("Tast T for tara (svarende til knaptryk paa vegt)") ;
-        System.out.println("Tast B for ny brutto (svarende til at belastningen paa vegt ændres)");
+        System.out.println("Tast B for ny brutto (svarende til at belastningen paa vegt ï¿½ndres)");
         System.out.println("Tast Q for at afslutte program program");
-        System.out.println("Indtast (T/B/Q for knaptryk / brutto ændring / quit)");
+        System.out.println("Indtast (T/B/Q for knaptryk / brutto ï¿½ndring / quit)");
         System.out.print  ("Tast her: ");
     }
 }
