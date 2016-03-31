@@ -18,10 +18,19 @@ public class VsCon {
     static boolean rm20flag = false;
     
     public static void main(String[] args) throws IOException{
+    	if(args.length == 1) {
+    		try {
+        		portdst = Integer.parseInt(args[0]);
+        	} catch(NumberFormatException e) {
+        		// We don't do anything here, because it's not an error we want to do anything with
+        	}
+    	}
+
+    	
         listener = new ServerSocket(portdst);
-            System.out.println("Venter paa connection på port " + portdst );
+            System.out.println("Venter på connection på port " + portdst );
             System.out.println("Indtast eventuel portnummer som 1. argument");
-            System.out.println("paa kommando linien for andet portnr");
+            System.out.println("på kommando linien for andet portnr");
         sock = listener.accept();
         instream = new BufferedReader(new InputStreamReader(sock.getInputStream()));
         outstream = new DataOutputStream(sock.getOutputStream());
@@ -31,12 +40,17 @@ public class VsCon {
             	if (inline.startsWith("RM")){						
                 	// ikke implimenteret
 
- 		}
+            	}
+            	else if(inline.startsWith("P")) {
+            		indtDisp = inline.substring(3, (inline.length() > 33) ? 33 : inline.length()-1);
+            		printmenu();
+            		outstream.writeBytes("A\r\n");
+            	}
                 else if (inline.startsWith("D")){
                     if (inline.equals("DW"))
                         indtDisp="";
                     else
-                        indtDisp=(inline.substring(2, inline.length()));//her skal anf�rselstegn udm.
+                        indtDisp=(inline.substring(3, inline.length()-1));//her skal anf�rselstegn udm.
                         printmenu();
                         outstream.writeBytes("DB"+"\r\n");
                 }
@@ -49,7 +63,7 @@ public class VsCon {
                     printmenu();
                     outstream.writeBytes("S S " + (brutto-tara)+ " kg "  +"\r\n");//HVOR MANGE SPACE?
                 }
-                else if (inline.startsWith("B")){ //denne ordre findes ikke p� en fysisk v�gt
+                else if (inline.startsWith("B")){ //denne ordre findes ikke på en fysisk vægt
                     String temp= inline.substring(2,inline.length());
                     brutto = Double.parseDouble(temp);
                     printmenu();
@@ -57,7 +71,7 @@ public class VsCon {
                 }
                 else if ((inline.startsWith("Q"))){
                     System.out.println("");
-                    System.out.println("Program stoppet Q modtaget paa com   port");
+                    System.out.println("Program stoppet Q modtaget på com port");
                     System.in.close();
                     System.out.close();
                     instream.close();
@@ -90,14 +104,14 @@ else {
         System.out.println("Brutto: " + (brutto)+ " kg"                       );
         System.out.println("Streng modtaget: "+inline)                         ;
         System.out.println("                                                 ");
-        System.out.println("Denne v�gt simulator lytter p� ordrene           ");
+        System.out.println("Denne vægt simulator lytter på ordrene           ");
         System.out.println("S, T, D 'TEST', DW, RM20 8 .... , B og Q         ");
-        System.out.println("p� kommunikationsporten.                         ");
+        System.out.println("på kommunikationsporten.                         ");
         System.out.println("******")						     ;
         System.out.println("Tast T for tara (svarende til knaptryk paa vegt)") ;
-        System.out.println("Tast B for ny brutto (svarende til at belastningen paa vegt �ndres)");
+        System.out.println("Tast B for ny brutto (svarende til at belastningen på vægt ændres)");
         System.out.println("Tast Q for at afslutte program program");
-        System.out.println("Indtast (T/B/Q for knaptryk / brutto �ndring / quit)");
+        System.out.println("Indtast (T/B/Q for knaptryk / brutto ændring / quit)");
         System.out.print  ("Tast her: ");
     }
 }
