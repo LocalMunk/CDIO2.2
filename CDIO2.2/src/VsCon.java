@@ -36,9 +36,9 @@ public class VsCon {
         outstream = new DataOutputStream(sock.getOutputStream());
         printmenu();
         try{
-            while (!(inline = instream.readLine().toUpperCase()).isEmpty()){ //her ventes p� input
+            while (!(inline = instream.readLine().toUpperCase()).isEmpty()){ //her ventes på input
             	if (inline.startsWith("RM")){						
-                	// ikke implimenteret
+                	// ikke implementeret
 
             	}
             	else if(inline.startsWith("P")) {
