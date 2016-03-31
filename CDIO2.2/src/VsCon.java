@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Scanner;
 
 public class VsCon {
     static ServerSocket listener;
@@ -11,11 +12,13 @@ public class VsCon {
     static double tara=0;
     static String inline;
     static String indtDisp= "";
+    static String sekDisp = "";
     static int portdst = 8000;
     static Socket sock;
     static BufferedReader instream;
     static DataOutputStream outstream;
     static boolean rm20flag = false;
+    static Scanner scanner = new Scanner(System.in);
     
     public static void main(String[] args) throws IOException{
     	if(args.length == 1) {
@@ -38,11 +41,15 @@ public class VsCon {
         try{
             while (!(inline = instream.readLine().toUpperCase()).isEmpty()){ //her ventes på input
             	if (inline.startsWith("RM")){						
-                	// ikke implementeret
-
+                	indtDisp = inline.substring(4, inline.length()-1);
+                	printmenu();
+                	double weight = getWeight() - tara;
+                	
+                	outstream.writeBytes("B\r\n");
+                	outstream.writeBytes("A \"" + weight + "\"\r\n");
             	}
             	else if(inline.startsWith("P")) {
-            		indtDisp = inline.substring(3, (inline.length() > 33) ? 33 : inline.length()-1);
+            		sekDisp = inline.substring(3, (inline.length() > 33) ? 33 : inline.length()-1);
             		printmenu();
             		outstream.writeBytes("A\r\n");
             	}
@@ -50,7 +57,7 @@ public class VsCon {
                     if (inline.equals("DW"))
                         indtDisp="";
                     else
-                        indtDisp=(inline.substring(3, inline.length()-1));//her skal anf�rselstegn udm.
+                        indtDisp=(inline.substring(3, inline.length()-1));//her skal anførselstegn udm.
                         printmenu();
                         outstream.writeBytes("DB"+"\r\n");
                 }
@@ -76,11 +83,10 @@ public class VsCon {
                     System.out.close();
                     instream.close();
                     outstream.close();
+                    listener.close();
                     System.exit(0);
                 }
-                
-
-else { 
+				else { 
                     printmenu();
                     outstream.writeBytes("ES"+"\r\n");
                 }
@@ -89,13 +95,28 @@ else {
         catch (Exception e){
             System.out.println("Exception: "+e.getMessage());
         }
+        
+        //We shouldn't ever reach this point, but just in case
+        sock.close();
+        instream.close();
+        outstream.close();
     }
+    
+    public static double getWeight() {
+    	try {
+    		return Double.parseDouble(scanner.next());
+    	} catch(NumberFormatException e) {
+    		throw e;
+    	}
+    }
+    
     public static void printmenu(){
         for (int i=0;i<2;i++)
         System.out.println("                                                 ");
         System.out.println("*************************************************");
         System.out.println("Netto: " + (brutto-tara)+ " kg"                   );
         System.out.println("Instruktionsdisplay: " +  indtDisp    );
+        System.out.println("Sekundært display: " +  sekDisp    );
         System.out.println("*************************************************");
         System.out.println("                                                 ");
         System.out.println("                                                 ");
