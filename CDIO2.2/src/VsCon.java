@@ -49,7 +49,7 @@ public class VsCon {
                 	outstream.writeBytes("A \"" + weight + "\"\r\n");
             	}
             	else if(inline.startsWith("P")) {
-            		sekDisp = inline.substring(3, (inline.length() > 33) ? 33 : inline.length()-1);
+            		sekDisp = inline.substring(2, (inline.length() > 33) ? 33 : inline.length());
             		printmenu();
             		outstream.writeBytes("A\r\n");
             	}
@@ -57,7 +57,7 @@ public class VsCon {
                     if (inline.equals("DW"))
                         indtDisp="";
                     else
-                        indtDisp=(inline.substring(3, inline.length()-1));//her skal anførselstegn udm.
+                        indtDisp=(inline.substring(2, inline.length()));//her skal anførselstegn udm.
                         printmenu();
                         outstream.writeBytes("DB"+"\r\n");
                 }
