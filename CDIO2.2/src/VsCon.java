@@ -40,8 +40,8 @@ public class VsCon {
         printmenu();
         try{
             while (!(inline = instream.readLine().toUpperCase()).isEmpty()){ //her ventes på input
-            	if (inline.startsWith("RM")){						
-                	indtDisp = inline.substring(4, inline.length()-1);
+            	if (inline.startsWith("RM20 8")){						
+                	indtDisp = inline.substring(8, inline.length()-1);
                 	printmenu();
                 	double weight = getWeight() - tara;
                 	
